@@ -622,7 +622,7 @@ def calculate_conditional_mt_scores_llm(df: pd.DataFrame, score_scope: str = "pr
             max_vals = torch.where(max_vals <= 0.4, torch.zeros_like(max_vals),
                        torch.where(max_vals >= 0.6, torch.ones_like(max_vals),
                                    (max_vals - 0.4) / 0.2))
-            missing_targets_score = (torch.sum(max_vals).item() / len(prev_targets))
+            missing_targets_score = 1 - (torch.sum(max_vals).item() / len(prev_targets))
 
             return (missing_targets_score, df_idx)
         except Exception as e:
